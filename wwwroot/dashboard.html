@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - ProgramacionIII CRUD</title>
+    <link rel="stylesheet" href="/styles/dashboard.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">ProgramacionIII CRUD</div>
+        <div class="nav-links">
+            <a href="/dashboard.html" class="active">Dashboard</a>
+            <a href="/profile.html">Perfil</a>
+            <a href="/payment.html">Pagos</a>
+            <a href="/login.html">Salir</a>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <h1>Dashboard</h1>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Usuarios</h3>
+                <p class="stat-value" id="totalUsers">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Órdenes</h3>
+                <p class="stat-value" id="totalOrders">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Ingresos Totales</h3>
+                <p class="stat-value" id="totalRevenue">$0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Pagos Pendientes</h3>
+                <p class="stat-value" id="pendingPayments">0</p>
+            </div>
+        </div>
+
+        <div class="recent-activity">
+            <h2>Actividad Reciente</h2>
+            <div id="activityList">
+                <p>No hay actividad reciente</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function loadDashboardData() {
+            try {
+                const response = await fetch('/api/dashboard/stats');
+                const stats = await response.json();
+
+                document.getElementById('totalUsers').textContent = stats.totalUsers;
+                document.getElementById('totalOrders').textContent = stats.totalOrders;
+                document.getElementById('totalRevenue').textContent = `$${stats.totalRevenue}`;
+                document.getElementById('pendingPayments').textContent = stats.pendingPayments;
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+            }
+        }
+
+        loadDashboardData();
+    </script>
+</body>
+
+</html>
